@@ -1,0 +1,20 @@
+{
+  // For more documentation visit https://github.com/devcontainers
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "devcontainer",
+  "workspaceFolder": "/workspaces/${localWorkspaceFolderBasename}",
+  "capAdd": [ "SYS_PTRACE" ],
+  "securityOpt": [ "seccomp=unconfined" ],
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-vscode.cpptools",
+        "ms-vscode.cmake-tools",
+        "twxs.cmake",
+        "eamodio.gitlens",
+        "matepek.vscode-catch2-test-adapter"
+      ]
+    }
+  },
+  "remoteUser": "vscode"
+}
