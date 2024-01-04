@@ -1,5 +1,5 @@
 # The FTowerX
-An implementation of Tower od Hanoi using FTXUI. This is a game you can play at any terminal.
+An implementation of Tower of Hanoi using FTXUI. This is a game you can play at any terminal.
 
 The contents of `./.devcontainer` are used to create a cross-platform containerized development environment using the provided `Dockerfile`. If you are using vscode, look into *Remote Development* extension.
 
