@@ -21,6 +21,9 @@ target_link_libraries(ftowerx_shared ftowerx_obj)
 add_library(ftowerx_static STATIC)
 target_link_libraries(ftowerx_static ftowerx_obj)
 
+add_executable(towerofhanoi main.cpp)
+target_link_libraries(towerofhanoi PRIVATE ftxui::screen ftxui::dom ftxui::component)
+
 include(Coverage)
 CleanCoverage(ftowerx_static)
 include(Format)
