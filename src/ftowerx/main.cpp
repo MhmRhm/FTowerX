@@ -1,36 +1,34 @@
 #include <memory>
 #include <stdio.h>
+#include <iostream>
 
-#include <ftxui/dom/elements.hpp>  // for filler, text, hbox, vbox
-#include <ftxui/dom/node.hpp>      // for Render
-#include <ftxui/screen/color.hpp>  // for ftxui
-#include <ftxui/screen/screen.hpp> // for Full, Screen
-
-int main() {
-  using namespace ftxui;
-  auto document = hbox({
-                      vbox(
-                        center(text("1")) | flex,
-                        separator(),
-                        center(text("2"))
-                      ) | flex,
-                      separator(),
-                      vbox(
-                        center(text("1")) | flex,
-                        separator(),
-                        center(text("2"))
-                      ) | flex,
-                      separator(),
-                      vbox(
-                        center(text("1")) | flex,
-                        separator(),
-                        center(text("2"))
-                      ) | flex,
-                  }) |
-                  border;
-  auto screen = Screen::Create(Dimension::Full(), Dimension::Fit(document));
-  Render(screen, document);
-  screen.Print();
+#include <ftxui/dom/elements.hpp>
+#include <ftxui/dom/node.hpp>
+#include <ftxui/screen/color.hpp>
+#include <ftxui/screen/screen.hpp>
+#include <ftxui/component/component.hpp>
+#include <ftxui/component/screen_interactive.hpp>
  
-  return 0;
+int main(void) {
+  using namespace ftxui;
+
+  auto screen = ScreenInteractive::Fullscreen();
+  Element document =
+    hbox(
+        vbox(
+            filler(),
+            text("▀▀") | color(Color::CyanLight) | center,
+            text("▀▀▀▀") | color(Color::YellowLight) | center,
+            text("▀▀▀▀▀▀") | color(Color::RedLight) | center
+        ) | flex,
+        separator(),
+        vbox() | flex,
+        separator(),
+        vbox() | flex
+    ) | border;
+    screen.Loop(Renderer([&] {
+        return document;
+    }));
+
+  return EXIT_SUCCESS;
 }
