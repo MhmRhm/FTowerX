@@ -7,4 +7,5 @@ target_precompile_headers(precompiled INTERFACE
 	<iostream>
 	<memory>
 	<stdexcept>
+	<math.h>
 )

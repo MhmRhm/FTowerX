@@ -86,86 +86,101 @@ TEST(GameOfTOHTests, construction) {
   GameOfTOH got{hight};
 
   for (size_t i = 0; i < hight; i++) {
-    auto disk{const_cast<Stack &>(got.getTower(0)).pop()};
+    auto disk{const_cast<Stack &>(got.getTower(GameOfTOH::TOWER_1)).pop()};
     ASSERT_EQ(disk->getSize(), i + 1);
   }
-  ASSERT_THROW(const_cast<Stack &>(got.getTower(0)).pop(), std::out_of_range);
-  ASSERT_THROW(const_cast<Stack &>(got.getTower(1)).pop(), std::out_of_range);
-  ASSERT_THROW(const_cast<Stack &>(got.getTower(2)).pop(), std::out_of_range);
+  ASSERT_THROW(const_cast<Stack &>(got.getTower(GameOfTOH::TOWER_1)).pop(),
+               std::out_of_range);
+  ASSERT_THROW(const_cast<Stack &>(got.getTower(GameOfTOH::TOWER_2)).pop(),
+               std::out_of_range);
+  ASSERT_THROW(const_cast<Stack &>(got.getTower(GameOfTOH::TOWER_3)).pop(),
+               std::out_of_range);
 }
 
 TEST(GameOfTOHTests, compliantMove) {
   GameOfTOH got{3};
 
-  got.selectOrMoveToTower(0);
-  got.selectOrMoveToTower(1);
-  got.selectOrMoveToTower(0);
-  got.selectOrMoveToTower(2);
+  got.selectOrMoveToTower(GameOfTOH::TOWER_1);
+  got.selectOrMoveToTower(GameOfTOH::TOWER_2);
+  got.selectOrMoveToTower(GameOfTOH::TOWER_1);
+  got.selectOrMoveToTower(GameOfTOH::TOWER_3);
 
-  auto disk1{const_cast<Stack &>(got.getTower(1)).pop()};
-  auto disk2{const_cast<Stack &>(got.getTower(2)).pop()};
-  auto disk3{const_cast<Stack &>(got.getTower(0)).pop()};
+  auto disk1{const_cast<Stack &>(got.getTower(GameOfTOH::TOWER_2)).pop()};
+  auto disk2{const_cast<Stack &>(got.getTower(GameOfTOH::TOWER_3)).pop()};
+  auto disk3{const_cast<Stack &>(got.getTower(GameOfTOH::TOWER_1)).pop()};
   ASSERT_EQ(disk1->getSize(), 1);
   ASSERT_EQ(disk2->getSize(), 2);
   ASSERT_EQ(disk3->getSize(), 3);
-  ASSERT_THROW(const_cast<Stack &>(got.getTower(0)).pop(), std::out_of_range);
-  ASSERT_THROW(const_cast<Stack &>(got.getTower(1)).pop(), std::out_of_range);
-  ASSERT_THROW(const_cast<Stack &>(got.getTower(2)).pop(), std::out_of_range);
+  ASSERT_THROW(const_cast<Stack &>(got.getTower(GameOfTOH::TOWER_1)).pop(),
+               std::out_of_range);
+  ASSERT_THROW(const_cast<Stack &>(got.getTower(GameOfTOH::TOWER_2)).pop(),
+               std::out_of_range);
+  ASSERT_THROW(const_cast<Stack &>(got.getTower(GameOfTOH::TOWER_3)).pop(),
+               std::out_of_range);
 }
 
 TEST(GameOfTOHTests, noncompliantMove) {
   GameOfTOH got{3};
 
-  got.selectOrMoveToTower(0);
-  got.selectOrMoveToTower(2);
-  got.selectOrMoveToTower(0);
-  got.selectOrMoveToTower(2);
+  got.selectOrMoveToTower(GameOfTOH::TOWER_1);
+  got.selectOrMoveToTower(GameOfTOH::TOWER_3);
+  got.selectOrMoveToTower(GameOfTOH::TOWER_1);
+  got.selectOrMoveToTower(GameOfTOH::TOWER_3);
 
-  auto disk1{const_cast<Stack &>(got.getTower(2)).pop()};
-  auto disk2{const_cast<Stack &>(got.getTower(0)).pop()};
-  auto disk3{const_cast<Stack &>(got.getTower(0)).pop()};
+  auto disk1{const_cast<Stack &>(got.getTower(GameOfTOH::TOWER_3)).pop()};
+  auto disk2{const_cast<Stack &>(got.getTower(GameOfTOH::TOWER_1)).pop()};
+  auto disk3{const_cast<Stack &>(got.getTower(GameOfTOH::TOWER_1)).pop()};
   ASSERT_EQ(disk1->getSize(), 1);
   ASSERT_EQ(disk2->getSize(), 2);
   ASSERT_EQ(disk3->getSize(), 3);
-  ASSERT_THROW(const_cast<Stack &>(got.getTower(0)).pop(), std::out_of_range);
-  ASSERT_THROW(const_cast<Stack &>(got.getTower(1)).pop(), std::out_of_range);
-  ASSERT_THROW(const_cast<Stack &>(got.getTower(2)).pop(), std::out_of_range);
+  ASSERT_THROW(const_cast<Stack &>(got.getTower(GameOfTOH::TOWER_1)).pop(),
+               std::out_of_range);
+  ASSERT_THROW(const_cast<Stack &>(got.getTower(GameOfTOH::TOWER_2)).pop(),
+               std::out_of_range);
+  ASSERT_THROW(const_cast<Stack &>(got.getTower(GameOfTOH::TOWER_3)).pop(),
+               std::out_of_range);
 }
 
 TEST(GameOfTOHTests, irrationalMove) {
   GameOfTOH got{3};
 
-  got.selectOrMoveToTower(2);
-  got.selectOrMoveToTower(1);
-  got.selectOrMoveToTower(1);
-  got.selectOrMoveToTower(0);
+  got.selectOrMoveToTower(GameOfTOH::TOWER_3);
+  got.selectOrMoveToTower(GameOfTOH::TOWER_2);
+  got.selectOrMoveToTower(GameOfTOH::TOWER_2);
+  got.selectOrMoveToTower(GameOfTOH::TOWER_1);
 
-  auto disk1{const_cast<Stack &>(got.getTower(0)).pop()};
-  auto disk2{const_cast<Stack &>(got.getTower(0)).pop()};
-  auto disk3{const_cast<Stack &>(got.getTower(0)).pop()};
+  auto disk1{const_cast<Stack &>(got.getTower(GameOfTOH::TOWER_1)).pop()};
+  auto disk2{const_cast<Stack &>(got.getTower(GameOfTOH::TOWER_1)).pop()};
+  auto disk3{const_cast<Stack &>(got.getTower(GameOfTOH::TOWER_1)).pop()};
   ASSERT_EQ(disk1->getSize(), 1);
   ASSERT_EQ(disk2->getSize(), 2);
   ASSERT_EQ(disk3->getSize(), 3);
-  ASSERT_THROW(const_cast<Stack &>(got.getTower(0)).pop(), std::out_of_range);
-  ASSERT_THROW(const_cast<Stack &>(got.getTower(1)).pop(), std::out_of_range);
-  ASSERT_THROW(const_cast<Stack &>(got.getTower(2)).pop(), std::out_of_range);
+  ASSERT_THROW(const_cast<Stack &>(got.getTower(GameOfTOH::TOWER_1)).pop(),
+               std::out_of_range);
+  ASSERT_THROW(const_cast<Stack &>(got.getTower(GameOfTOH::TOWER_2)).pop(),
+               std::out_of_range);
+  ASSERT_THROW(const_cast<Stack &>(got.getTower(GameOfTOH::TOWER_3)).pop(),
+               std::out_of_range);
 }
 
 TEST(GameOfTOHTests, selfMove) {
   GameOfTOH got{3};
 
-  got.selectOrMoveToTower(0);
-  got.selectOrMoveToTower(0);
+  got.selectOrMoveToTower(GameOfTOH::TOWER_1);
+  got.selectOrMoveToTower(GameOfTOH::TOWER_1);
 
-  auto disk1{const_cast<Stack &>(got.getTower(0)).pop()};
-  auto disk2{const_cast<Stack &>(got.getTower(0)).pop()};
-  auto disk3{const_cast<Stack &>(got.getTower(0)).pop()};
+  auto disk1{const_cast<Stack &>(got.getTower(GameOfTOH::TOWER_1)).pop()};
+  auto disk2{const_cast<Stack &>(got.getTower(GameOfTOH::TOWER_1)).pop()};
+  auto disk3{const_cast<Stack &>(got.getTower(GameOfTOH::TOWER_1)).pop()};
   ASSERT_EQ(disk1->getSize(), 1);
   ASSERT_EQ(disk2->getSize(), 2);
   ASSERT_EQ(disk3->getSize(), 3);
-  ASSERT_THROW(const_cast<Stack &>(got.getTower(0)).pop(), std::out_of_range);
-  ASSERT_THROW(const_cast<Stack &>(got.getTower(1)).pop(), std::out_of_range);
-  ASSERT_THROW(const_cast<Stack &>(got.getTower(2)).pop(), std::out_of_range);
+  ASSERT_THROW(const_cast<Stack &>(got.getTower(GameOfTOH::TOWER_1)).pop(),
+               std::out_of_range);
+  ASSERT_THROW(const_cast<Stack &>(got.getTower(GameOfTOH::TOWER_2)).pop(),
+               std::out_of_range);
+  ASSERT_THROW(const_cast<Stack &>(got.getTower(GameOfTOH::TOWER_3)).pop(),
+               std::out_of_range);
 }
 
 } // namespace toh

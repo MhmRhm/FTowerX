@@ -21,8 +21,10 @@ target_link_libraries(ftowerx_shared ftowerx_obj)
 add_library(ftowerx_static STATIC)
 target_link_libraries(ftowerx_static ftowerx_obj)
 
-add_executable(towerofhanoi main.cpp)
+add_executable(towerofhanoi bootstrap.cpp main.cpp)
 target_link_libraries(towerofhanoi
+	PRIVATE precompiled
+	PRIVATE ftowerx_shared
 	PRIVATE ftxui::screen
 	PRIVATE ftxui::dom
 	PRIVATE ftxui::component
