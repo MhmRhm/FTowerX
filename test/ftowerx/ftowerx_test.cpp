@@ -3,71 +3,169 @@
 
 namespace toh {
 
-TEST(StackManagerTests, initiallyEmptyPop) {
+TEST(UniformStackTests, initiallyEmptyPop) {
   Stack stack{};
+  ASSERT_EQ(stack.size(), 0);
+  ASSERT_TRUE(stack.empty());
   ASSERT_THROW(stack.pop(), std::out_of_range);
 }
 
-TEST(StackManagerTests, initiallyEmptyPush) {
+TEST(UniformStackTests, initiallyEmptyPush) {
   Stack stack{};
   auto disk{std::make_unique<Disk>(0)};
-  ASSERT_TRUE(stack.push(std::move(disk)));
+  ASSERT_FALSE(stack.push(std::move(disk)));
+  ASSERT_EQ(stack.size(), 1);
+  ASSERT_FALSE(stack.empty());
 }
 
-TEST(StackManagerTests, pushPop) {
+TEST(UniformStackTests, pushPop) {
   Stack stack{};
   auto disk1{std::make_unique<Disk>(0)};
   Disk *disk1Ptr = disk1.get();
 
-  ASSERT_TRUE(stack.push(std::move(disk1)));
+  stack.push(std::move(disk1));
   std::unique_ptr<Disk> disk2{stack.pop()};
 
   ASSERT_EQ(disk1Ptr, disk2.get());
+  ASSERT_TRUE(stack.empty());
 }
 
-TEST(StackManagerTests, ltPush) {
+TEST(UniformStackTests, ltPush) {
   Stack stack{};
   auto disk1{std::make_unique<Disk>(1)};
   auto disk2{std::make_unique<Disk>(0)};
+  stack.push(std::move(disk1));
 
-  ASSERT_TRUE(stack.push(std::move(disk1)));
-  ASSERT_TRUE(stack.push(std::move(disk2)));
+  ASSERT_FALSE(stack.push(std::move(disk2)));
 }
 
-TEST(StackManagerTests, gtPush) {
+TEST(UniformStackTests, gtPush) {
   Stack stack{};
   auto disk1{std::make_unique<Disk>(0)};
   auto disk2{std::make_unique<Disk>(1)};
+  stack.push(std::move(disk1));
 
-  ASSERT_TRUE(stack.push(std::move(disk1)));
-  ASSERT_FALSE(stack.push(std::move(disk2)));
+  std::optional<std::unique_ptr<Disk>> rejectedDisk{};
+  ASSERT_TRUE(rejectedDisk = stack.push(std::move(disk2)));
+  ASSERT_EQ(rejectedDisk.value()->getSize(), 1);
 }
 
-TEST(StackManagerTests, eqPush) {
+TEST(UniformStackTests, eqPush) {
   Stack stack{};
   auto disk1{std::make_unique<Disk>(0)};
   auto disk2{std::make_unique<Disk>(0)};
+  stack.push(std::move(disk1));
 
-  ASSERT_TRUE(stack.push(std::move(disk1)));
-  ASSERT_FALSE(stack.push(std::move(disk2)));
+  std::optional<std::unique_ptr<Disk>> rejectedDisk{};
+  ASSERT_TRUE(rejectedDisk = stack.push(std::move(disk2)));
+  ASSERT_EQ(rejectedDisk.value()->getSize(), 0);
 }
 
-TEST(StackManagerTests, negativePushFirst) {
+TEST(UniformStackTests, negativePushFirst) {
   Stack stack{};
   auto disk1{std::make_unique<Disk>(-1)};
   auto disk2{std::make_unique<Disk>(1000)};
 
-  ASSERT_TRUE(stack.push(std::move(disk1)));
-  ASSERT_TRUE(stack.push(std::move(disk2)));
+  ASSERT_FALSE(stack.push(std::move(disk1)));
+  ASSERT_FALSE(stack.push(std::move(disk2)));
 }
 
-TEST(StackManagerTests, negativePushLast) {
+TEST(UniformStackTests, negativePushLast) {
   Stack stack{};
   auto disk1{std::make_unique<Disk>(0)};
   auto disk2{std::make_unique<Disk>(-1)};
+  stack.push(std::move(disk1));
 
-  ASSERT_TRUE(stack.push(std::move(disk1)));
-  ASSERT_FALSE(stack.push(std::move(disk2)));
+  std::optional<std::unique_ptr<Disk>> rejectedDisk{};
+  ASSERT_TRUE(rejectedDisk = stack.push(std::move(disk2)));
+  ASSERT_EQ(rejectedDisk.value()->getSize(), -1);
+}
+
+TEST(GameOfTOHTests, construction) {
+  size_t hight{3};
+  GameOfTOH got{hight};
+
+  for (size_t i = 0; i < hight; i++) {
+    auto disk{const_cast<Stack &>(got.getTower(0)).pop()};
+    ASSERT_EQ(disk->getSize(), i + 1);
+  }
+  ASSERT_THROW(const_cast<Stack &>(got.getTower(0)).pop(), std::out_of_range);
+  ASSERT_THROW(const_cast<Stack &>(got.getTower(1)).pop(), std::out_of_range);
+  ASSERT_THROW(const_cast<Stack &>(got.getTower(2)).pop(), std::out_of_range);
+}
+
+TEST(GameOfTOHTests, compliantMove) {
+  GameOfTOH got{3};
+
+  got.selectOrMoveToTower(0);
+  got.selectOrMoveToTower(1);
+  got.selectOrMoveToTower(0);
+  got.selectOrMoveToTower(2);
+
+  auto disk1{const_cast<Stack &>(got.getTower(1)).pop()};
+  auto disk2{const_cast<Stack &>(got.getTower(2)).pop()};
+  auto disk3{const_cast<Stack &>(got.getTower(0)).pop()};
+  ASSERT_EQ(disk1->getSize(), 1);
+  ASSERT_EQ(disk2->getSize(), 2);
+  ASSERT_EQ(disk3->getSize(), 3);
+  ASSERT_THROW(const_cast<Stack &>(got.getTower(0)).pop(), std::out_of_range);
+  ASSERT_THROW(const_cast<Stack &>(got.getTower(1)).pop(), std::out_of_range);
+  ASSERT_THROW(const_cast<Stack &>(got.getTower(2)).pop(), std::out_of_range);
+}
+
+TEST(GameOfTOHTests, noncompliantMove) {
+  GameOfTOH got{3};
+
+  got.selectOrMoveToTower(0);
+  got.selectOrMoveToTower(2);
+  got.selectOrMoveToTower(0);
+  got.selectOrMoveToTower(2);
+
+  auto disk1{const_cast<Stack &>(got.getTower(2)).pop()};
+  auto disk2{const_cast<Stack &>(got.getTower(0)).pop()};
+  auto disk3{const_cast<Stack &>(got.getTower(0)).pop()};
+  ASSERT_EQ(disk1->getSize(), 1);
+  ASSERT_EQ(disk2->getSize(), 2);
+  ASSERT_EQ(disk3->getSize(), 3);
+  ASSERT_THROW(const_cast<Stack &>(got.getTower(0)).pop(), std::out_of_range);
+  ASSERT_THROW(const_cast<Stack &>(got.getTower(1)).pop(), std::out_of_range);
+  ASSERT_THROW(const_cast<Stack &>(got.getTower(2)).pop(), std::out_of_range);
+}
+
+TEST(GameOfTOHTests, irrationalMove) {
+  GameOfTOH got{3};
+
+  got.selectOrMoveToTower(2);
+  got.selectOrMoveToTower(1);
+  got.selectOrMoveToTower(1);
+  got.selectOrMoveToTower(0);
+
+  auto disk1{const_cast<Stack &>(got.getTower(0)).pop()};
+  auto disk2{const_cast<Stack &>(got.getTower(0)).pop()};
+  auto disk3{const_cast<Stack &>(got.getTower(0)).pop()};
+  ASSERT_EQ(disk1->getSize(), 1);
+  ASSERT_EQ(disk2->getSize(), 2);
+  ASSERT_EQ(disk3->getSize(), 3);
+  ASSERT_THROW(const_cast<Stack &>(got.getTower(0)).pop(), std::out_of_range);
+  ASSERT_THROW(const_cast<Stack &>(got.getTower(1)).pop(), std::out_of_range);
+  ASSERT_THROW(const_cast<Stack &>(got.getTower(2)).pop(), std::out_of_range);
+}
+
+TEST(GameOfTOHTests, selfMove) {
+  GameOfTOH got{3};
+
+  got.selectOrMoveToTower(0);
+  got.selectOrMoveToTower(0);
+
+  auto disk1{const_cast<Stack &>(got.getTower(0)).pop()};
+  auto disk2{const_cast<Stack &>(got.getTower(0)).pop()};
+  auto disk3{const_cast<Stack &>(got.getTower(0)).pop()};
+  ASSERT_EQ(disk1->getSize(), 1);
+  ASSERT_EQ(disk2->getSize(), 2);
+  ASSERT_EQ(disk3->getSize(), 3);
+  ASSERT_THROW(const_cast<Stack &>(got.getTower(0)).pop(), std::out_of_range);
+  ASSERT_THROW(const_cast<Stack &>(got.getTower(1)).pop(), std::out_of_range);
+  ASSERT_THROW(const_cast<Stack &>(got.getTower(2)).pop(), std::out_of_range);
 }
 
 } // namespace toh
