@@ -1,21 +1,73 @@
 #include "ftowerx/ftowerx.h"
 #include "gtest/gtest.h"
 
+namespace toh {
+
 TEST(StackManagerTests, initiallyEmptyPop) {
-  StackManager<std::unique_ptr<Disk>> stackManager{};
-  ASSERT_THROW(stackManager.pop(), std::out_of_range);
+  Stack stack{};
+  ASSERT_THROW(stack.pop(), std::out_of_range);
 }
 
 TEST(StackManagerTests, initiallyEmptyPush) {
-  StackManager<std::unique_ptr<Disk>> stackManager{};
-  auto disk{std::make_unique<Disk>()};
-  ASSERT_EQ(stackManager.push(std::move(disk)), true);
+  Stack stack{};
+  auto disk{std::make_unique<Disk>(0)};
+  ASSERT_TRUE(stack.push(std::move(disk)));
 }
 
 TEST(StackManagerTests, pushPop) {
-  StackManager<std::unique_ptr<Disk>> stackManager{};
-  auto disk1{std::make_unique<Disk>()};
-  stackManager.push(std::move(disk1));
-  decltype(disk1) disk2{stackManager.pop()};
-  ASSERT_EQ(disk1.get(), disk2.get());
+  Stack stack{};
+  auto disk1{std::make_unique<Disk>(0)};
+  Disk *disk1Ptr = disk1.get();
+
+  ASSERT_TRUE(stack.push(std::move(disk1)));
+  std::unique_ptr<Disk> disk2{stack.pop()};
+
+  ASSERT_EQ(disk1Ptr, disk2.get());
 }
+
+TEST(StackManagerTests, ltPush) {
+  Stack stack{};
+  auto disk1{std::make_unique<Disk>(1)};
+  auto disk2{std::make_unique<Disk>(0)};
+
+  ASSERT_TRUE(stack.push(std::move(disk1)));
+  ASSERT_TRUE(stack.push(std::move(disk2)));
+}
+
+TEST(StackManagerTests, gtPush) {
+  Stack stack{};
+  auto disk1{std::make_unique<Disk>(0)};
+  auto disk2{std::make_unique<Disk>(1)};
+
+  ASSERT_TRUE(stack.push(std::move(disk1)));
+  ASSERT_FALSE(stack.push(std::move(disk2)));
+}
+
+TEST(StackManagerTests, eqPush) {
+  Stack stack{};
+  auto disk1{std::make_unique<Disk>(0)};
+  auto disk2{std::make_unique<Disk>(0)};
+
+  ASSERT_TRUE(stack.push(std::move(disk1)));
+  ASSERT_FALSE(stack.push(std::move(disk2)));
+}
+
+TEST(StackManagerTests, negativePushFirst) {
+  Stack stack{};
+  auto disk1{std::make_unique<Disk>(-1)};
+  auto disk2{std::make_unique<Disk>(1000)};
+
+  ASSERT_TRUE(stack.push(std::move(disk1)));
+  ASSERT_TRUE(stack.push(std::move(disk2)));
+}
+
+TEST(StackManagerTests, negativePushLast) {
+  Stack stack{};
+  auto disk1{std::make_unique<Disk>(0)};
+  auto disk2{std::make_unique<Disk>(-1)};
+
+  ASSERT_TRUE(stack.push(std::move(disk1)));
+  ASSERT_FALSE(stack.push(std::move(disk2)));
+}
+
+} // namespace toh
