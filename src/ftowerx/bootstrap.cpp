@@ -37,18 +37,19 @@ void runTOHGame(size_t size) {
   GameOfTOH got(size);
 
   auto screen = ScreenInteractive::Fullscreen();
+  
   auto renderer = Renderer([&] {
     return hbox(printTower(got.getTower(GameOfTOH::TOWER_1),
                            got.isSourceTower(GameOfTOH::TOWER_1)) |
-                    flex,
+                    ftxui::size(WIDTH, EQUAL, screen.dimx() / 3),
                 separator(),
                 printTower(got.getTower(GameOfTOH::TOWER_2),
                            got.isSourceTower(GameOfTOH::TOWER_2)) |
-                    flex,
+                    ftxui::size(WIDTH, EQUAL, screen.dimx() / 3),
                 separator(),
                 printTower(got.getTower(GameOfTOH::TOWER_3),
                            got.isSourceTower(GameOfTOH::TOWER_3)) |
-                    flex) |
+                    ftxui::size(WIDTH, EQUAL, screen.dimx() / 3)) |
            border;
   });
 
