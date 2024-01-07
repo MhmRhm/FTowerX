@@ -1,5 +1,6 @@
 #include "include/ftowerx/ftowerx.h"
 
+#include <chrono>
 #include <map>
 #include <vector>
 
@@ -35,25 +36,44 @@ void runTOHGame(size_t size) {
   using namespace toh;
 
   GameOfTOH got(size);
+  std::chrono::time_point<std::chrono::high_resolution_clock> start{};
+  std::chrono::time_point<std::chrono::high_resolution_clock> end{};
+  auto timeToText{[&]() {
+    using namespace std::chrono;
+    auto time{end - start};
+    std::stringstream stream;
+    stream << "completion time = " << std::fixed << std::setprecision(3)
+           << duration_cast<milliseconds>(time).count() / 1000.0 << " seconds";
+    return stream.str();
+  }};
 
   auto screen = ScreenInteractive::Fullscreen();
-  
+
   auto renderer = Renderer([&] {
-    return hbox(printTower(got.getTower(GameOfTOH::TOWER_1),
-                           got.isSourceTower(GameOfTOH::TOWER_1)) |
-                    ftxui::size(WIDTH, EQUAL, screen.dimx() / 3),
-                separator(),
-                printTower(got.getTower(GameOfTOH::TOWER_2),
-                           got.isSourceTower(GameOfTOH::TOWER_2)) |
-                    ftxui::size(WIDTH, EQUAL, screen.dimx() / 3),
-                separator(),
-                printTower(got.getTower(GameOfTOH::TOWER_3),
-                           got.isSourceTower(GameOfTOH::TOWER_3)) |
-                    ftxui::size(WIDTH, EQUAL, screen.dimx() / 3)) |
-           border;
+    return vbox(
+        hbox(printTower(got.getTower(GameOfTOH::TOWER_1),
+                        got.isSourceTower(GameOfTOH::TOWER_1)) |
+                 flex | ftxui::size(WIDTH, EQUAL, Terminal::Size().dimx),
+             separator(),
+             printTower(got.getTower(GameOfTOH::TOWER_2),
+                        got.isSourceTower(GameOfTOH::TOWER_2)) |
+                 flex | ftxui::size(WIDTH, EQUAL, Terminal::Size().dimx),
+             separator(),
+             printTower(got.getTower(GameOfTOH::TOWER_3),
+                        got.isSourceTower(GameOfTOH::TOWER_3)) |
+                 flex | ftxui::size(WIDTH, EQUAL, Terminal::Size().dimx)) |
+            border | flex,
+        end != std::chrono::time_point<std::chrono::high_resolution_clock>{}
+            ? text(timeToText()) | center
+            : text(""));
   });
 
   auto component = CatchEvent(renderer, [&](Event event) {
+    if (start ==
+        std::chrono::time_point<std::chrono::high_resolution_clock>{}) {
+      start = std::chrono::high_resolution_clock::now();
+    }
+
     if (event == Event::Character('q')) {
       screen.ExitLoopClosure()();
       return true;
@@ -70,6 +90,12 @@ void runTOHGame(size_t size) {
     if (event == Event::Escape) {
       got.selectOrMoveToTower(GameOfTOH::TOWER_END);
     }
+
+    if (end == std::chrono::time_point<std::chrono::high_resolution_clock>{} &&
+        got.getTower(GameOfTOH::TOWER_3).size() == size) {
+      end = std::chrono::high_resolution_clock::now();
+    }
+
     return false;
   });
 

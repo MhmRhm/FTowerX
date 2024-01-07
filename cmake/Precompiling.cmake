@@ -8,4 +8,6 @@ target_precompile_headers(precompiled INTERFACE
 	<memory>
 	<stdexcept>
 	<math.h>
+	<string>
+	<iomanip>
 )
