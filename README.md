@@ -6,10 +6,8 @@ An implementation of Tower of Hanoi using FTXUI. This is a game you can play at 
 The contents of `./.devcontainer` are used to create a cross-platform containerized development environment using the provided `Dockerfile`. If you are using vscode, look into *Remote Development* extension.
 
 - Read the `./INSTALL` and provide dependencies.
-- Change `MY_PROJECT_NAME` and `MY_PACKAGE_NAME` variables at `./CMakeLists.txt`.
-- Add your name and email to the `./cmake/Install.cmake` file.
-- You should be good to go!
 - In-source builds are not allowed and disabled(see `./cmake/NoInSourceBuilds.cmake`). Use as follows:
+- You should be good to go!
 
 ```bash
 cmake -DCMAKE_CXX_COMPILER=clang++ -DCMAKE_C_COMPILER=clang -B ../build-llvm-debug -S .
