@@ -1,5 +1,5 @@
 # The FTowerX
-An implementation of Tower of Hanoi using FTXUI. This is a game you can play at any terminal.
+An implementation of Tower of Hanoi using FTXUI. This is a game you can play in any terminal.
 
 <p align="center"><img src="https://github.com/MhmRhm/FTowerX/blob/main/doc/game_play.gif" alt="Demo image"></img></p>
 
