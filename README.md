@@ -1,4 +1,4 @@
-# SeeMake
+# FTowerX
 
 A feature-packed, ready-to-use CMake template with testing, static and dynamic
 checks, coverage reports, and more.
@@ -71,9 +71,9 @@ Modify the `test/CMakeLists.txt` to enable Boost:
 @@ -1,4 +1,4 @@
  include(Testing)
  
- add_subdirectory(libsee)
--# add_subdirectory(see)
-+add_subdirectory(see)
+ add_subdirectory(libtoh)
+-# add_subdirectory(toh)
++add_subdirectory(toh)
 ```
 
 If you clean the build directory by running for example:
@@ -120,7 +120,7 @@ a `git status` command will indicate this issue. To fix it, simply run the
 following command inside the container terminal:
 
 ```bash
-git config --global --add safe.directory /workspaces/SeeMake
+git config --global --add safe.directory /workspaces/FTowerX
 ```
 
 That's it! You can start developing.
@@ -190,8 +190,8 @@ Examples:
 
 1. **Documentation**:
    ```bash
-   cmake --build --preset linux-default-debug --target doxygen-libsee_static
-   cd ../CppMeetup-build-linux-default-debug/doxygen-libsee_static/
+   cmake --build --preset linux-default-debug --target doxygen-libtoh_static
+   cd ../CppMeetup-build-linux-default-debug/doxygen-libtoh_static/
    python3 -m http.server 8172
    # Go to localhost:8172 in your browser to view the documentation
    ```
@@ -200,8 +200,8 @@ Examples:
 
 2. **Memory Check Report**:
    ```bash
-   cmake --build --preset linux-default-debug --target memcheck-google_test_libsee
-   cd ../CppMeetup-build-linux-default-debug/valgrind-google_test_libsee/
+   cmake --build --preset linux-default-debug --target memcheck-google_test_libtoh
+   cd ../CppMeetup-build-linux-default-debug/valgrind-google_test_libtoh/
    python3 -m http.server 8172
    # Go to localhost:8172 to view the test results
    ```
@@ -210,8 +210,8 @@ Examples:
 
 3. **Coverage Report**:
    ```bash
-   cmake --build --preset linux-default-debug --target coverage-google_test_libsee
-   cd ../CppMeetup-build-linux-default-debug/coverage-google_test_libsee/
+   cmake --build --preset linux-default-debug --target coverage-google_test_libtoh
+   cd ../CppMeetup-build-linux-default-debug/coverage-google_test_libtoh/
    python3 -m http.server 8172
    # Go to localhost:8172 to view the test coverage report
    ```
@@ -267,8 +267,8 @@ option to add it to the Path. On Windows coverage reports are available only wit
 To generate coverage reports on Windows:
 
 ```bash
-cmake --build --preset windows-clang-debug --target coverage-google_test_libsee
-cd ../CppMeetup-build-windows-clang-debug/coverage-google_test_libsee/
+cmake --build --preset windows-clang-debug --target coverage-google_test_libtoh
+cd ../CppMeetup-build-windows-clang-debug/coverage-google_test_libtoh/
 python3 -m http.server 8172
 # Go to localhost:8172 to view the test coverage report
 ```

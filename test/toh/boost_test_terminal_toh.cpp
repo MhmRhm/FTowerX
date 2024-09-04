@@ -1,5 +1,5 @@
-#define BOOST_TEST_MODULE testlibsee
-#include "terminal_see.h"
+#define BOOST_TEST_MODULE testlibtoh
+#include "terminal_toh.h"
 #include <boost/test/unit_test.hpp>
 
 BOOST_AUTO_TEST_CASE(test_getMessage) {
@@ -7,7 +7,7 @@ BOOST_AUTO_TEST_CASE(test_getMessage) {
   bool result{};
 
   // when
-  result = run_terminal_see();
+  result = run_terminal_toh();
 
   // then
   BOOST_REQUIRE_EQUAL(result, true);

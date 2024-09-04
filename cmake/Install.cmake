@@ -1,10 +1,10 @@
 include(GNUInstallDirs)
 
-install(TARGETS precompiled libsee_obj libsee_static libsee_shared
-	EXPORT SeeLibrary
+install(TARGETS precompiled libtoh_obj libtoh_static libtoh_shared
+	EXPORT TohLibrary
 	ARCHIVE COMPONENT Runtime
 	LIBRARY COMPONENT Development
-	PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/see
+	PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/toh
 		COMPONENT Development
 )
 
@@ -14,20 +14,20 @@ if(UNIX)
 	)
 endif()
 
-install(EXPORT SeeLibrary
-	DESTINATION ${CMAKE_INSTALL_LIBDIR}/see/cmake
-	NAMESPACE see::
+install(EXPORT TohLibrary
+	DESTINATION ${CMAKE_INSTALL_LIBDIR}/toh/cmake
+	NAMESPACE toh::
 	COMPONENT Development
 )
 
-install(FILES "SeeConfig.cmake"
-	DESTINATION ${CMAKE_INSTALL_LIBDIR}/see/cmake
+install(FILES "TohConfig.cmake"
+	DESTINATION ${CMAKE_INSTALL_LIBDIR}/toh/cmake
 )
 
-install(TARGETS see
+install(TARGETS toh
 	RUNTIME COMPONENT Runtime
 )
 
 set(CPACK_PACKAGE_CONTACT "Mohammad Rahimi <https://github.com/MhmRhm>")
-set(CPACK_PACKAGE_DESCRIPTION "SeeMake: a CMake project template.")
+set(CPACK_PACKAGE_DESCRIPTION "FTowerX: Tower of Hanoi implemented with FTXUI.")
 include(CPack)

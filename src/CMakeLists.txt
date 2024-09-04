@@ -1,2 +1,2 @@
-add_subdirectory(libsee)
-add_subdirectory(see)
+add_subdirectory(libtoh)
+add_subdirectory(toh)

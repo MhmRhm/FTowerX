@@ -249,7 +249,7 @@
 			"vendorName": "Mohammad Rahimi",
 			"packageDirectory": "package-linux-deb",
 			"environment": {
-				"CPACK_DEBIAN_PACKAGE_NAME": "SeeMake",
+				"CPACK_DEBIAN_PACKAGE_NAME": "FTowerX",
 				"CPACK_DEBIAN_FILE_NAME": "DEB-DEFAULT"
 			}
 		},
@@ -261,8 +261,8 @@
 			"vendorName": "Mohammad Rahimi",
 			"packageDirectory": "package-windows-nsis",
 			"environment": {
-				"CPACK_NSIS_DISPLAY_NAME": "SeeMake",
-				"CPACK_NSIS_PACKAGE_NAME": "SeeMake",
+				"CPACK_NSIS_DISPLAY_NAME": "FTowerX",
+				"CPACK_NSIS_PACKAGE_NAME": "FTowerX",
 				"CPACK_NSIS_URL_INFO_ABOUT": "https://github.com/MhmRhm"
 			}
 		},

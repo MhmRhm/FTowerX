@@ -5,4 +5,4 @@
  *
  * @return true Always
  */
-bool run_terminal_see();
+bool run_terminal_toh();

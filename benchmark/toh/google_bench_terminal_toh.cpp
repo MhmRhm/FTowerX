@@ -1,9 +1,11 @@
 #include "benchmark/benchmark.h"
-#include "libsee/see_model.h"
+#include "terminal_toh.h"
 
 static void BM_getMessage(benchmark::State &state) {
+  std::cout.setstate(std::ios_base::failbit);
   for (auto _ : state) {
-    getMessage();
+    run_terminal_toh();
   }
+  std::cout.clear();
 }
 BENCHMARK(BM_getMessage);

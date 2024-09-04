@@ -1,7 +1,7 @@
-#include "libsee/see_model.h"
+#include "libtoh/toh_model.h"
 #include "gtest/gtest.h"
 
-TEST(See_Model_Tests, Test_getMessage) {
+TEST(Toh_Model_Tests, Test_getMessage) {
   // given
   std::string msg{};
 
