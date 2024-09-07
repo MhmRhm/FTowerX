@@ -6,6 +6,6 @@
  * @return int
  */
 int main() {
-  run_terminal_toh();
+  terminalToh();
   return 0;
 }
