@@ -77,7 +77,7 @@ public:
    * @brief Constructs a new Game with a specified number of disks.
    * @param size The number of disks in the game.
    */
-  Game(size_t size);
+  explicit Game(size_t size);
 
   /**
    * @brief Copy constructor for the Game class.

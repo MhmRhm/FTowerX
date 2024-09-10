@@ -1,4 +1,4 @@
 include(Testing)
 
 add_subdirectory(libtoh)
-# add_subdirectory(toh)
+add_subdirectory(toh)

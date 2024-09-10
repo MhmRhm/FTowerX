@@ -1,12 +1,10 @@
-add_executable(google_bench_toh
-	google_bench_terminal_toh.cpp
-)
-target_link_libraries(google_bench_toh
-	PRIVATE terminal_toh_static
-)
-target_link_libraries(google_bench_toh
-	PRIVATE precompiled
+add_executable(bench_toh
+	bench_terminal_toh.cpp
 )
 
-Format(google_bench_toh .)
-AddBenchmarks(google_bench_toh)
+target_link_libraries(bench_toh
+	PRIVATE precompiled
+	PRIVATE terminal_toh_static
+)
+
+Format(bench_toh .)

@@ -1,4 +1,4 @@
-#include "include/libtoh/toh_model.h"
+#include "libtoh/toh_model.h"
 
 using namespace std;
 using namespace toh;

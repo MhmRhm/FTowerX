@@ -65,7 +65,7 @@
 				"CPPCHECK_INSTALL_DIR": "C:/Program Files/Cppcheck",
 				"CLANG-FORMAT_INSTALL_DIR": "C:/Program Files/LLVM/bin",
 				"WIN_MSVC": "YES",
-				"DEFAULT_CXX_COMPILE_FLAGS": "/W4;/Wall;/WX;/EHsc;/wd4668;/wd4710;/wd4711",
+				"DEFAULT_CXX_COMPILE_FLAGS": "/W4;/Wall;/WX;/EHsc;/wd4668;/wd4710;/wd4711;/wd4514",
 				"DEFAULT_CXX_OPTIMIZE_FLAG": "/Od"
 			}
 		},
@@ -90,7 +90,7 @@
 				"CMAKE_INSTALL_PREFIX": "${sourceDir}/../${sourceDirName}-install-${presetName}",
 				"CPPCHECK_INSTALL_DIR": "C:/Program Files/Cppcheck",
 				"CLANG-FORMAT_INSTALL_DIR": "C:/Program Files/LLVM/bin",
-				"DEFAULT_CXX_COMPILE_FLAGS": "/W4;/Wall;/WX;/EHsc;/wd4668;/wd4710;/wd4711",
+				"DEFAULT_CXX_COMPILE_FLAGS": "/W4;/Wall;/WX;/EHsc;/wd4668;/wd4710;/wd4711;/wd4514",
 				"DEFAULT_CXX_OPTIMIZE_FLAG": "/Ox"
 			}
 		},
