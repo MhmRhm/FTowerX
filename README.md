@@ -152,14 +152,14 @@ cmake_minimum_required(VERSION 3.30.0)
 project(Extension VERSION 0.0.0 LANGUAGES CXX)
 
 include(FetchContent)
-FetchContent_Declare(Toh
+FetchContent_Declare(LibToh
     GIT_TAG main
     GIT_REPOSITORY https://github.com/MhmRhm/FTowerX.git
 )
-FetchContent_MakeAvailable(Toh)
+FetchContent_MakeAvailable(LibToh)
 
 add_executable(extension main.cpp)
-target_link_libraries(extension PRIVATE libtoh_shared precompiled)
+target_link_libraries(extension PRIVATE toh::precompiled toh::libtoh_shared)
 ```
 
 2. Create a `.cpp` file containing the `main` function:

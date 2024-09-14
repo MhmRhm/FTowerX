@@ -1,5 +1,16 @@
 include(GNUInstallDirs)
 
+add_library(toh::precompiled ALIAS precompiled)
+add_library(toh::libtoh_obj ALIAS libtoh_obj)
+add_library(toh::libtoh_static ALIAS libtoh_static)
+add_library(toh::libtoh_shared ALIAS libtoh_shared)
+
+export(
+	TARGETS precompiled libtoh_obj libtoh_static libtoh_shared
+	NAMESPACE toh::
+	FILE "${PROJECT_BINARY_DIR}/TohLibrary.cmake"
+)
+
 install(TARGETS precompiled libtoh_obj libtoh_static libtoh_shared
 	EXPORT TohLibrary
 	ARCHIVE COMPONENT Runtime
