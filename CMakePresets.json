@@ -18,7 +18,7 @@
 				"CMAKE_CXX_EXTENSIONS": "OFF",
 				"CMAKE_EXPORT_COMPILE_COMMANDS": "YES",
 				"CMAKE_INSTALL_PREFIX": "${sourceDir}/../${sourceDirName}-install-${presetName}",
-				"DEFAULT_CXX_COMPILE_FLAGS": "-Wextra;-Wall;-Wfloat-equal;-Wundef;-Wpointer-arith;-Wshadow;-Wcast-align;-Wswitch-default;-Wswitch-enum;-Wconversion;-Wpedantic;-Werror",
+				"DEFAULT_CXX_COMPILE_FLAGS": "-g;-Wextra;-Wall;-Wfloat-equal;-Wundef;-Wpointer-arith;-Wshadow;-Wcast-align;-Wswitch-default;-Wswitch-enum;-Wconversion;-Wpedantic;-Werror",
 				"DEFAULT_CXX_OPTIMIZE_FLAG": "-O0"
 			}
 		},
@@ -118,7 +118,7 @@
 				"CPPCHECK_INSTALL_DIR": "C:/Program Files/Cppcheck",
 				"CLANG-FORMAT_INSTALL_DIR": "C:/Program Files/LLVM/bin",
 				"WIN_CLANG": "YES",
-				"DEFAULT_CXX_COMPILE_FLAGS": "-Wextra;-Wall;-Wfloat-equal;-Wundef;-Wpointer-arith;-Wshadow;-Wcast-align;-Wswitch-default;-Wswitch-enum;-Wconversion;-Wpedantic;-Werror",
+				"DEFAULT_CXX_COMPILE_FLAGS": "-g;-Wextra;-Wall;-Wfloat-equal;-Wundef;-Wpointer-arith;-Wshadow;-Wcast-align;-Wswitch-default;-Wswitch-enum;-Wconversion;-Wpedantic;-Werror",
 				"DEFAULT_CXX_OPTIMIZE_FLAG": "-O0"
 			}
 		},
