@@ -1,6 +1,7 @@
 # FTowerX
 
-An implementation of the Tower of Hanoi game, following best practices.
+An implementation of the Tower of Hanoi game, following best practices. Presented
+at [C++ Malaysia Meetup, September 2024, Monash University](https://www.meetup.com/cpp-malaysia/events/302648150/).
 
 This is a cross-platform, lightweight, terminal-based implementation of the Tower
 of Hanoi, featuring automated testing, coverage reports, packaging, and more. It
